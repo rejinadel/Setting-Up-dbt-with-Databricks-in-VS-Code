@@ -1,84 +1,78 @@
 # Setting-Up-dbt-with-Databricks-in-VS-Code
-Data Build Tool for Data Engineers
+Data Build Tool(dbt) for Data Engineers
+
+Getting Started with dbt and Databricks in VS Code
+
+This article provides a step-by-step guide to setting up dbt (data build tool) with Databricks on Windows using Python virtual environments and VS Code. By the end of this guide, you will have a working environment ready to run dbt models, SQL transformations, and explore data in Databricks.
 
 
-Setting Up dbt with Databricks in VS Code
-
-This guide explains how to set up dbt (data build tool) with Databricks on Windows using Python virtual environments and VS Code. This is ideal for learners who want to practice dbt models and SQL transformations in a cloud environment.
-
-1. Prerequisites
+** Prerequisites**
 
 Before starting, ensure you have:
 
-Python 3.8 or 3.12 installed.
+Python 3.8 or 3.12 installed
 
-VS Code installed.
+VS Code installed
 
-Databricks workspace with a SQL endpoint.
+A Databricks workspace with a SQL endpoint
 
-Optional: Git for version control.
+Git (optional, for version control)
 
-2. Create and Activate a Virtual Environment
+** Create and Activate a Virtual Environment**
 
-Open PowerShell or VS Code terminal.
+Open PowerShell or the VS Code terminal.
 
-Navigate to your workspace folder:
+**Navigate to your workspace folder:**
 
-cd C:\Users\prashant\Desktop\dbt_learn1
+cd C:\Workspace\dbt_project
 
-
-Create a virtual environment:
+**Create a virtual environment:**
 
 python -m venv .venv
 
-
-Activate the environment:
-
+**Activate the environment:**
 & .\.venv\Scripts\Activate.ps1
 
-
-Upgrade pip inside the environment:
-
+**Upgrade pip:**
 python -m pip install --upgrade pip
 
-3. Install dbt-core and Databricks Adapter
+**Install dbt-core and Databricks Adapter**
 
-Install dbt core and the Databricks adapter:
 
 pip install dbt-core dbt-databricks
 
 
-Verify installation:
+**Verify installation:**
 
 dbt --version
 
 
-Expected output:
+You should see output similar to:
 
-Core: dbt-core 1.10.x
-Plugins: databricks 1.10.x
+Core: dbt-core 1.x.x
+Plugins: databricks 1.x.x
 
-4. Initialize a dbt Project
+** Initialize a dbt Project**
 
-Navigate to your workspace folder:
+**Navigate to your workspace folder:**
 
-cd C:\Users\prashant\Desktop\dbt_learn1
-
-
-Initialize the project:
-
-dbt init dbt_learnings
+cd C:\Workspace\dbt_project
 
 
-Project name: dbt_learnings
+**Initialize a new dbt project:**
+
+dbt init my_dbt_project
+
+
+**Enter project name: my_dbt_project**
 
 Database adapter: Databricks
 
-Answer prompts for catalog, schema, threads, and Unity Catalog.
+Provide required details like catalog, schema, threads, and Unity Catalog option.
 
-Folder structure will look like:
+**Folder structure created:**
 
-dbt_learnings/
+my_dbt_project/
 ├─ models/
 ├─ snapshots/
 ├─ seeds/
@@ -86,56 +80,53 @@ dbt_learnings/
 ├─ dbt_project.yml
 └─ .gitignore
 
-5. Configure Profiles
+ **Configure dbt Profiles**
 
-Open profiles.yml (usually in C:\Users\prashant\.dbt\profiles.yml):
+Edit profiles.yml (usually located at C:\Users\<User>\.dbt\profiles.yml) and add:
 
-dbt_learnings:
+my_dbt_project:
   target: dev
   outputs:
     dev:
       type: databricks
-      catalog: dbt_learnings
+      catalog: my_catalog
       schema: default
-      host: <your-databricks-host>
-      http_path: <your-databricks-sql-endpoint>
-      token: <your-databricks-personal-access-token>
+      host: <databricks-host>
+      http_path: <databricks-sql-endpoint>
+      token: <databricks-access-token>
       threads: 1
 
 
-Test the connection:
+**Test the connection:**
 
 dbt debug
 
 
-Expected outcome:
+**Expected outcome:**
 
 profiles.yml file [OK found and valid]
 dbt_project.yml file [OK found and valid]
 Connection: Registered adapter: databricks
 
-6. Open VS Code Correctly
+** Open the Project in VS Code**
 
-Open the folder containing dbt_project.yml, e.g.:
+Open the folder containing dbt_project.yml.
 
-C:\Users\prashant\Desktop\dbt_learn1\dbt_learnings
-
-
-Select Python interpreter (.venv):
+**Select Python interpreter:**
 
 Ctrl+Shift+P → Python: Select Interpreter → Choose .venv
 
 
-Install dbt Power User extension for VS Code.
+**Install the dbt Power User extension from the VS Code Marketplace.**
 
-7. Configure dbt Power User
+** Configure dbt Power User**
 
 Open Command Palette (Ctrl+Shift+P):
 
 dbt: Select Project
 
 
-Choose your project: dbt_learnings.
+**Choose your project: my_dbt_project.**
 
 Status bar should show your active dbt project.
 
@@ -149,51 +140,52 @@ Compile models: dbt: Compile Project
 
 Seed tables: dbt: Seed Project
 
-8. Working with dbt Models
+** Working with dbt Models**
 
 Place SQL files in the models/ folder.
 
-Run models:
+**Run models:**
 
 dbt run
 
 
-Test models:
+**Test models:**
 
 dbt test
 
 
-Compile models without executing:
+**Compile models without executing:**
 
 dbt compile
 
 
-Generate documentation:
+**Generate documentation:**
 
 dbt docs generate
 dbt docs serve
 
-9. Optional: Git Integration
+ **Optional: Git Integration**
 
-Initialize git:
+Initialize git in the project folder:
 
 git init
 git add .
 git commit -m "initial commit"
 
 
-Rename branch:
+**Rename the default branch:**
 
 git branch -M main
 
-10. Tips & Common Pitfalls
+** Tips & Common Pitfalls**
 
-Always activate the virtual environment before running dbt commands.
+Always activate your virtual environment before running dbt commands.
 
-profiles.yml must match the project name in dbt_project.yml.
+Ensure profiles.yml matches the project name in dbt_project.yml.
 
 Open VS Code in the folder where dbt_project.yml exists.
 
 If Power User errors occur, check Python interpreter and active dbt project.
 
-This setup is now ready for building dbt models on Databricks, running SQL queries, and managing transformations end-to-end.
+With this setup, you can now start building dbt models on Databricks, execute SQL queries, and manage transformations efficiently.
+
